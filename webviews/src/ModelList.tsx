@@ -1,6 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
-import { FcCancel, FcCheckmark } from "react-icons/fc";
+import { FcCancel, FcCheckmark, FcMinus } from "react-icons/fc";
 import { ProgressData } from '../../src/commons/progressData';
 import ProgressBar from './ProgressBar';
 
@@ -15,7 +15,7 @@ interface ModelListProps {
     label: string;
     value: string | null;
     onChange: (option: ModelOption | null) => void;
-    status: boolean;
+    status: boolean | null;
     options: ModelOption[];
     progress?: ProgressData;
     disabled?: boolean;
@@ -90,9 +90,9 @@ const ModelList: React.FC<ModelListProps> = ({ className, label, value, onChange
     return (
         <div className="form-group">
             <div className='model-list--outer-wrapper'>
-                
+
                 <label className='model-list--label' htmlFor={label}>
-                    {status ? <FcCheckmark /> : <FcCancel />} 
+                {status === null ? <FcMinus /> : (status ? <FcCheckmark /> : <FcCancel />)}
                     <span>{label}:</span>
                 </label>
 
@@ -107,7 +107,7 @@ const ModelList: React.FC<ModelListProps> = ({ className, label, value, onChange
                         styles={customStyles}
                         formatOptionLabel={formatOptionLabel}
                     />
-                    {!status && !progress && <span className='info-label' style={{ display: 'flex', alignItems: 'center' }}> (will be pulled automatically)</span>}
+                    {!status === null && !status && !progress && <span className='info-label' style={{ display: 'flex', alignItems: 'center' }}> (will be pulled automatically)</span>}
 
                 </div>
             </div>
